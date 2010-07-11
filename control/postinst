@@ -1,8 +1,22 @@
 #!/bin/sh
 
-mkdir -p /var/palm/event.d
+PID="org.webosinternals.speechd"
+SID="org.webosinternals.speechd"
 
-cp $IPKG_OFFLINE_ROOT/usr/palm/applications/org.webosinternals.speechd/etc/event.d/org.webosinternals.speechd /var/palm/event.d
+APPS=/media/cryptofs/apps
 
-/sbin/start org.webosinternals.speechd
+# Stop the service if running
+/sbin/stop ${SID} || true
+/usr/bin/killall -9 ${SID} || true
 
+# Remove the upstart script
+rm -f /var/palm/event.d/${SID}
+
+# Install the upstart script
+cp $APPS/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
+
+# Check the upstart script is installed
+[ -f /var/palm/event.d/${SID} ] exit 1
+
+# Start the service
+/sbin/start ${SID}
