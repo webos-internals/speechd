@@ -2,6 +2,7 @@
 
 PID="org.webosinternals.speechd"
 SID="org.webosinternals.speechd"
+LIB="/media/internal/.widk/usr/lib"
 
 APPS=/media/cryptofs/apps
 
@@ -17,6 +18,10 @@ cp $APPS/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
 
 # Check the upstart script is installed
 [ -f /var/palm/event.d/${SID} ] exit 1
+
+# but libspeechd.so.2 where others can find it
+[ -d ${LIB} ] || mkdir -p ${LIB}
+cp $APPS/usr/palm/applications/${PID}/lib/libspeechd.so.2 ${LIB}
 
 # Start the service
 /sbin/start ${SID}

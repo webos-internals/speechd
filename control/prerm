@@ -1,6 +1,7 @@
 #!/bin/sh
 
 SID="org.webosinternals.speechd"
+LIB="/media/internal/.widk/usr/lib/libspeechd.so.2"
 
 # Stop the service if running
 /sbin/stop ${SID} || true
@@ -8,3 +9,7 @@ SID="org.webosinternals.speechd"
 
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}
+
+# Remove the lib
+rm -f ${LIB}
+
