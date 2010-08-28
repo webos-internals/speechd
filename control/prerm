@@ -10,6 +10,10 @@ LIB="/media/internal/.widk/usr/lib/libspeechd.so.2"
 # Remove the server executable
 rm -f /var/usr/sbin/${SID}
 rm -f /var/usr/lib/libdotconf.so.0
+rm -f /var/usr/lib/libspeechd.so.2
+rm -f /var/usr/lib/libespeak.so.1
+rm -rf /var/usr/lib/speech-dispatcher*
+rm -rf /var/etc/speech-dispatcher
 
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}

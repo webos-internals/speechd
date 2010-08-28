@@ -3,7 +3,8 @@ description "Speech Dispatcher"
 start on stopped finish
 
 script
-	exec /var/usr/sbin/org.webosinternals.speechd -s
+	LD_LIBRARY_PATH=/var/usr/lib:$LD_LIBRARY_PATH
+	exec /var/usr/sbin/org.webosinternals.speechd -s -C /var/etc/speech-dispatcher
 end script
 
 respawn

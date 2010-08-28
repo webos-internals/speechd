@@ -10,12 +10,21 @@ APPS=/media/cryptofs/apps
 /sbin/stop ${SID} || true
 /usr/bin/killall -9 ${SID} || true
 
+# Fix the mess caused by the way, the first version worked
+if [ -f /var/palm/event.d/${SID} ] && \
+	md5sum /var/palm/event.d/${SID} | grep -q "^5cd9a2abe3518ba7b1f161a19d899963 "
+then
+	/usr/bin/ipkg -o $APPS -force-depends remove org.webosinternals.speechd
+	/usr/bin/ipkg -o $APPS -force-depends install org.webosinternals.speechd
+fi
+
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}
 
 # Install the server executable
-mkdir -p /var/usr/sbin /var/usr/lib
-cp $APPS/usr/palm/applications/${PID}/lib/libdotconf.so.0 /var/usr/lib/libdotconf.so.0
+mkdir -p /var/usr/sbin /var/usr/lib /var/etc
+cp -R $APPS/usr/palm/applications/${PID}/lib/* /var/usr/lib/
+cp -R $APPS/usr/palm/applications/${PID}/etc/* /var/etc/
 cp $APPS/usr/palm/applications/${PID}/bin/speech-dispatcher /var/usr/sbin/${SID}
 
 # Install the upstart script
