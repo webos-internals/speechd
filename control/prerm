@@ -7,6 +7,10 @@ LIB="/media/internal/.widk/usr/lib/libspeechd.so.2"
 /sbin/stop ${SID} || true
 /usr/bin/killall -9 ${SID} || true
 
+# Remove the server executable
+rm -f /var/usr/sbin/${SID}
+rm -f /var/usr/lib/libdotconf.so.0
+
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}
 

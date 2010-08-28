@@ -13,6 +13,11 @@ APPS=/media/cryptofs/apps
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}
 
+# Install the server executable
+mkdir -p /var/usr/sbin /var/usr/lib
+cp $APPS/usr/palm/applications/${PID}/lib/libdotconf.so.0 /var/usr/lib/libdotconf.so.0
+cp $APPS/usr/palm/applications/${PID}/bin/speech-dispatcher /var/usr/sbin/${SID}
+
 # Install the upstart script
 cp $APPS/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
 

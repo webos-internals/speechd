@@ -3,7 +3,7 @@ description "Speech Dispatcher"
 start on stopped finish
 
 script
-	exec /media/cryptofs/apps/usr/palm/applications/org.webosinternals.speechd/speech-dispatcher -s
+	exec /var/usr/sbin/org.webosinternals.speechd -s
 end script
 
 respawn
