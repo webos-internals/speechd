@@ -14,8 +14,7 @@ APPS=/media/cryptofs/apps
 if [ -f /var/palm/event.d/${SID} ] && \
 	md5sum /var/palm/event.d/${SID} | grep -q "^5cd9a2abe3518ba7b1f161a19d899963 "
 then
-	/usr/bin/ipkg -o $APPS -force-depends remove org.webosinternals.speechd
-	/usr/bin/ipkg -o $APPS -force-depends install org.webosinternals.speechd
+	/usr/bin/ipkg -o $APPS -nodeps install /media/internal/.developer/org.webosinternals.speechd_0.7.1-5_armv7.ipk
 fi
 
 # Remove the upstart script
