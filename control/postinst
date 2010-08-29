@@ -35,7 +35,7 @@ cp $APPS/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
 cp $APPS/usr/palm/applications/${PID}/lib/libspeechd.so.2 ${LIB}
 
 # Check the upstart script is installed
-[ -f /var/palm/event.d/${SID} ] exit 1
+[ -f /var/palm/event.d/${SID} ] || exit 1
 
 # Start the service
 /sbin/start ${SID}
