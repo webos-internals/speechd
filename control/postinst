@@ -14,7 +14,7 @@ APPS=/media/cryptofs/apps
 if [ -f /var/palm/event.d/${SID} ] && \
 	md5sum /var/palm/event.d/${SID} | grep -q "^5cd9a2abe3518ba7b1f161a19d899963 "
 then
-	/usr/bin/ipkg -o $APPS -nodeps install /media/internal/.developer/org.webosinternals.speechd_0.7.1-5_armv7.ipk
+	/usr/bin/ipkg -o ${APPS} -nodeps install /media/internal/.developer/org.webosinternals.speechd_0.7.1-5_armv7.ipk
 fi
 
 # Remove the upstart script
@@ -22,16 +22,18 @@ rm -f /var/palm/event.d/${SID}
 
 # Install the server executable
 mkdir -p /var/usr/sbin /var/usr/lib /var/etc
-cp -R $APPS/usr/palm/applications/${PID}/lib/* /var/usr/lib/
-cp -R $APPS/usr/palm/applications/${PID}/etc/* /var/etc/
-cp $APPS/usr/palm/applications/${PID}/bin/speech-dispatcher /var/usr/sbin/${SID}
+mv ${APPS}/usr/palm/applications/${PID}/etc/speech-dispatcher/modules/espeak-generic.conf0000644 \
+	${APPS}/usr/palm/applications/${PID}/etc/speech-dispatcher/modules/espeak-generic.conf || true
+cp -R ${APPS}/usr/palm/applications/${PID}/lib/* /var/usr/lib/
+cp -R ${APPS}/usr/palm/applications/${PID}/etc/* /var/etc/
+cp ${APPS}/usr/palm/applications/${PID}/bin/speech-dispatcher /var/usr/sbin/${SID}
 
 # Install the upstart script
-cp $APPS/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
+cp ${APPS}/usr/palm/applications/${PID}/upstart/${SID} /var/palm/event.d/${SID}
 
 # put libspeechd.so.2 where others can find it
 [ -d ${LIB} ] || mkdir -p ${LIB}
-cp $APPS/usr/palm/applications/${PID}/lib/libspeechd.so.2 ${LIB}
+cp ${APPS}/usr/palm/applications/${PID}/lib/libspeechd.so.2 ${LIB}
 
 # Check the upstart script is installed
 [ -f /var/palm/event.d/${SID} ] || exit 1
