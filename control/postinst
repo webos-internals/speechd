@@ -6,20 +6,32 @@ LIB="/media/internal/.widk/usr/lib"
 
 APPS=/media/cryptofs/apps
 
+SERVICES_ID=org.webosinternals.speechd.service
+SERVICES_PATH=/media/cryptofs/apps/usr/palm/services/$SERVICES_ID
+
+#if [ -z "$IPKG_OFFLINE_ROOT" ]; then
+#	/usr/sbin/rootfs_open -w
+#fi
+
 # Stop the service if running
 /sbin/stop ${SID} || true
 /usr/bin/killall -9 ${SID} || true
 
-# Fix the mess caused by the way, the first version worked
-if [ -f /var/palm/event.d/${SID} ] && \
-	md5sum /var/palm/event.d/${SID} | grep -q "^5cd9a2abe3518ba7b1f161a19d899963 "
-then
-	/usr/bin/ipkg -o ${APPS} -nodeps install /media/internal/.developer/org.webosinternals.speechd_0.7.1-5_armv7.ipk
-fi
-
 # Remove the upstart script
 rm -f /var/palm/event.d/${SID}
 
+# --- Install Javascript service ---
+# make directories in the rare event they don't exist
+[ -d /var/palm/ls2/services/prv ] || /bin/mkdir -p /var/palm/ls2/services/prv
+[ -d /var/palm/ls2/services/pub ] || /bin/mkdir -p /var/palm/ls2/services/pub
+
+/usr/bin/ls-control scan-services || true
+
+# copy dbus service file
+/bin/cp -f $SERVICES_PATH/dbus /var/palm/ls2/services/prv/$SERVICES_ID.service
+/bin/cp -f $SERVICES_PATH/dbus /var/palm/ls2/services/pub/$SERVICES_ID.service
+
+# --- Install upstart service ---
 # Install the server executable
 mkdir -p /var/usr/sbin /var/usr/lib /var/etc
 mv ${APPS}/usr/palm/applications/${PID}/etc/speech-dispatcher/modules/espeak-generic.conf0000644 \

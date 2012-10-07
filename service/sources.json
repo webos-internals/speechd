@@ -1,0 +1,24 @@
+[{
+	"library": {
+		"name": "foundations",
+		"version": "1.0"
+	}
+},
+{
+    "source": "includes.js"
+},
+{
+	"source": "sayAssistant.js" 
+},
+{
+	"source": "getOutputAssistant.js" 
+},
+{
+	"source": "setOutputAssistant.js" 
+},
+{
+	"source": "commandline.js"
+},
+{
+    "source": "permAssistant.js" 
+}]

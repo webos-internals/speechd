@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.webosinternals.speechd.service
+Exec=/var/usr/bin/run-homebrew-js-service /media/cryptofs/apps/usr/palm/services/org.webosinternals.speechd.service

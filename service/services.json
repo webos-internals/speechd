@@ -1,0 +1,30 @@
+{
+"id": "org.webosinternals.speechd.service",
+"description": "Service to speak text",
+"services": [ {
+	"name": "org.webosinternals.speechd.service",
+	"description": "A service that provides an interface speechd",
+	"commands": [ 
+	{
+        "name": "checkperms",
+        "assistant": "permAssistant",
+        "public": true
+    },
+	{
+        "name": "getOutput",
+        "assistant": "getOutputAssistant",
+        "public": true
+    },
+	{
+        "name": "setOutput",
+        "assistant": "setOutputAssistant",
+        "public": true
+    },
+	{ 
+		"name": "say", 
+		"assistant": "sayAssistant",
+		"public": true
+	}
+	] 
+}]
+}
